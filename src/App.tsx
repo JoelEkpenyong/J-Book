@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as esbuild from "esbuild-wasm";
+import { useEffect, useRef, useState } from "react";
+import { fetchPlugin } from "./plugins/fetch-plugin";
+import { unpkgPathPlugin } from "./plugins/unpkgPath";
 
-function App() {
+const App = () => {
+  const [input, setInput] = useState("");
+  const [code, setCode] = useState("");
+  const ref = useRef<any>();
+
+  const startService = async () => {
+    ref.current = await esbuild.startService({
+      worker: true,
+      wasmURL: "/esbuild.wasm",
+    });
+  };
+
+  const onClick = async () => {
+    if (!ref.current) return;
+    const result = await ref.current.build({
+      entryPoints: ["index.js"],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
+      define: {
+        'process.env.NODE_ENV': "'production'",
+        global: 'window'
+      }
+    });
+
+    setCode(result.outputFiles[0].text);
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      ></textarea>
+      <div>
+        <button onClick={onClick}>Submit</button>
+      </div>
+      <pre>{code}</pre>
     </div>
   );
-}
+};
 
 export default App;

@@ -1,4 +1,8 @@
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
+import { editor } from "monaco-editor";
+import prettier from "prettier";
+import parser from "prettier/parser-babel";
+import { useRef } from "react";
 
 interface CodeEditorProps {
   initialValue: string;
@@ -15,31 +19,52 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   language = "javascript",
   onChange,
 }) => {
+  const monacoEditorRef = useRef<editor.IStandaloneCodeEditor>();
+
   const onEditorDidMount: EditorDidMount = (getValue, monacoEditor) => {
     monacoEditor.onDidChangeModelContent(() => {
       onChange(getValue());
+      monacoEditorRef.current = monacoEditor;
     });
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
   };
 
+  const formatCode = () => {
+    const unformatted = monacoEditorRef.current?.getModel()?.getValue();
+    if (!unformatted) return;
+
+    const formatted = prettier.format(unformatted, {
+      parser: "babel",
+      plugins: [parser],
+      useTabs: false,
+      semi: true,
+      singleQuote: true,
+    });
+
+    monacoEditorRef.current?.setValue(formatted);
+  };
+
   return (
-    <MonacoEditor
-      editorDidMount={onEditorDidMount}
-      value={initialValue}
-      height={height}
-      language={language}
-      theme={theme}
-      options={{
-        wordWrap: "on",
-        minimap: { enabled: false },
-        showUnused: false,
-        folding: false,
-        lineNumbersMinChars: 3,
-        fontSize: 16,
-        scrollBeyondLastLine: false,
-        automaticLayout: true,
-      }}
-    />
+    <>
+      <button onClick={formatCode}>Format</button>
+      <MonacoEditor
+        editorDidMount={onEditorDidMount}
+        value={initialValue}
+        height={height}
+        language={language}
+        theme={theme}
+        options={{
+          wordWrap: "on",
+          minimap: { enabled: false },
+          showUnused: false,
+          folding: false,
+          lineNumbersMinChars: 3,
+          fontSize: 16,
+          scrollBeyondLastLine: false,
+          automaticLayout: true,
+        }}
+      />
+    </>
   );
 };
 

@@ -2,10 +2,10 @@ import * as esbuild from "esbuild-wasm";
 import { useEffect, useRef, useState } from "react";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 import { unpkgPathPlugin } from "./plugins/unpkgPath";
+import CodeEditor from "./components/codeEditor";
 
 const App = () => {
   const [input, setInput] = useState("");
-  const [code, setCode] = useState("");
   const ref = useRef<any>();
   const iFrame = useRef<any>();
 
@@ -61,16 +61,16 @@ const App = () => {
 
   return (
     <>
+      <CodeEditor initialValue="const a = 1" onChange={(value) => setInput(value)} />
       <textarea value={input} onChange={(e) => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <pre>{code}</pre>
 
       <iframe
         ref={iFrame}
         srcDoc={html}
-        title="iFrmae"
+        title="preview"
         sandbox="allow-scripts allow-modals"
       ></iframe>
     </>

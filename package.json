@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@monaco-editor/react": "3.7.5",
+    "@monaco-editor/react": "^4.4.5",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/prismjs": "^1.26.0",
     "node-sass": "^7.0.1"
   }
 }

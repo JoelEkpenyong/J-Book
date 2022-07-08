@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 
 interface PreviewProps {
   code: string;
+  error: string;
 }
 
 const html = `
@@ -38,7 +39,7 @@ const html = `
 </html>
 `;
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const Preview: React.FC<PreviewProps> = ({ code, error }) => {
   const iFrame = useRef<any>();
 
   useEffect(() => {
@@ -56,6 +57,8 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
         title="preview"
         sandbox="allow-scripts allow-modals"
       ></iframe>
+
+      {error && <div className="preview-error">{error}</div>}
     </div>
   );
 };

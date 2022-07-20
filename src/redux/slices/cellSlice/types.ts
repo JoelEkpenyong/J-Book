@@ -32,6 +32,6 @@ export interface IDeleteCellPayload {
 }
 
 export interface IInsertCellBeforePayload {
-  id: string;
+  id: string | null;
   type: CellTypes;
 }

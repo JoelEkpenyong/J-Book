@@ -4,7 +4,7 @@ import {
   ICell,
   ICellState,
   IDeleteCellPayload,
-  IInsertCellBeforePayload,
+  IInsertCellAfterPayload,
   IMoveCellPayload,
   IUpdateCellPayload,
 } from "./types";
@@ -40,7 +40,7 @@ export const cellSlice = createSlice({
       state.order[targetIndex] = id;
     },
 
-    insertCellBefore: (state: ICellState, action: PayloadAction<IInsertCellBeforePayload>) => {
+    insertCellAfter: (state: ICellState, action: PayloadAction<IInsertCellAfterPayload>) => {
       const cell: ICell = {
         content: "",
         type: action.payload.type,
@@ -49,15 +49,13 @@ export const cellSlice = createSlice({
 
       state.data[cell.id] = cell;
       if (!action.payload.id) {
-        state.order.push(cell.id);
+        state.order.unshift(cell.id);
       } else {
         const index = state.order.findIndex((id) => id === action.payload.id);
-        state.order.splice(index, 0, cell.id);
+        state.order.splice(index + 1, 0, cell.id);
       }
     },
   },
 });
-
-export const { insertCellBefore, updateCell, deleteCell, moveCell } = cellSlice.actions;
 
 export default cellSlice;

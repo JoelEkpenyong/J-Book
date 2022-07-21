@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cellSlice, { insertCellBefore } from "./slices/cellSlice";
+import cellSlice from "./slices/cellSlice";
 import thunk from "redux-thunk";
 
 export const store = configureStore({
@@ -10,8 +10,3 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
-
-store.dispatch(insertCellBefore({ id: null, type: "code" }));
-store.dispatch(insertCellBefore({ id: null, type: "text" }));
-
-console.log(store.getState());

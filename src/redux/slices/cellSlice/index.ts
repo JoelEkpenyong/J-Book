@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { randomId } from "../../../helpers/utils";
 import {
   ICell,
   ICellState,
@@ -15,7 +16,7 @@ const initialState: ICellState = {
   data: {},
 };
 
-const cellSlice = createSlice({
+export const cellSlice = createSlice({
   name: "cell",
   initialState,
   reducers: {
@@ -57,10 +58,6 @@ const cellSlice = createSlice({
   },
 });
 
-export const { updateCell, insertCellBefore, deleteCell, moveCell } = cellSlice.actions;
+export const { insertCellBefore, updateCell, deleteCell, moveCell } = cellSlice.actions;
 
-export default cellSlice.reducer;
-
-const randomId = () => {
-  return Math.random().toString(36).substring(2, 5);
-};
+export default cellSlice;

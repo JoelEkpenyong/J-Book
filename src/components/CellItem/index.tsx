@@ -1,4 +1,5 @@
 import { ICell } from "../../redux/slices/cellSlice/types";
+import ActionBar from "../ActionBar";
 import CodeCell from "../CodeCell";
 import TextEditor from "../TextEditor";
 
@@ -7,7 +8,12 @@ interface CellItemProps {
 }
 
 const CellItem: React.FC<CellItemProps> = ({ cell }) => {
-  return <div>{cell.type === "code" ? <CodeCell cell={cell} /> : <TextEditor />}</div>;
+  return (
+    <div>
+      <ActionBar id={cell.id} />
+      {cell.type === "code" ? <CodeCell cell={cell} /> : <TextEditor cell={cell} />}
+    </div>
+  );
 };
 
 export default CellItem;

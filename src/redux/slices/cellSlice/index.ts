@@ -33,8 +33,8 @@ export const cellSlice = createSlice({
     moveCell: (state: ICellState, action: PayloadAction<IMoveCellPayload>) => {
       const { direction, id } = action.payload;
       const currentIndex = state.order.findIndex((c) => c === id);
-      if (currentIndex === 0 || currentIndex === state.order.length - 1) return;
       const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+      if (targetIndex < 0 || targetIndex > state.order.length - 1) return;
 
       state.order[currentIndex] = state.order[targetIndex];
       state.order[targetIndex] = id;

@@ -16,7 +16,7 @@ const initialState: ICellState = {
   data: {},
 };
 
-export const cellSlice = createSlice({
+const cellSlice = createSlice({
   name: "cell",
   initialState,
   reducers: {

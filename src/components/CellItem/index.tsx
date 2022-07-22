@@ -1,5 +1,5 @@
 import "./style.scss";
-import { ICell } from "../../redux/slices/cellSlice/types";
+import { ICell } from "../../redux/slices/cell/types";
 import ActionBar from "../ActionBar";
 import CodeCell from "../CodeCell";
 import TextEditor from "../TextEditor";

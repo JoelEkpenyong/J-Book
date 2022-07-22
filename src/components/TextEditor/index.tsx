@@ -1,7 +1,7 @@
 import "./style.scss";
 import MDEditor from "@uiw/react-md-editor";
 import { useEffect, useRef, useState } from "react";
-import { ICell } from "../../redux/slices/cellSlice/types";
+import { ICell } from "../../redux/slices/cell/types";
 import { useAppActions } from "../../hooks/useAppActions";
 
 interface TextEditorProps {

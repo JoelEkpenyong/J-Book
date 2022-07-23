@@ -29,6 +29,13 @@ const bundleSlice = createSlice({
         loading: false,
       };
     });
+    builder.addCase(createBundle.rejected, (state, action) => {
+      state[action.meta.arg.cellId] = {
+        loading: false,
+        code: "",
+        err: action.error.message as string,
+      };
+    });
   },
 });
 

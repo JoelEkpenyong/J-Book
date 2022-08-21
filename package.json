@@ -18,7 +18,6 @@
     "axios": "^0.27.2",
     "bulmaswatch": "^0.8.1",
     "esbuild-wasm": "0.8.27",
-    "lerna": "^5.2.0",
     "localforage": "^1.10.0",
     "monaco-editor": "^0.33.0",
     "prettier": "^2.6.2",
